@@ -1,0 +1,141 @@
+[
+    {
+        "name": "Liga Studentilor",
+        "type" : "Asociație",
+        "location": "Corp M, Sala 101",
+        "program": "Luni -Vineri: 10:00 - 16:00",
+        "tags": ["studenti", "asociatie", "eveneimente", "voluntariat"],
+        "description": "Liga Studentilor este o organizatie non-profit care se dedica sprijinirii studentilor in dezvoltarea lor academica si personala. Oferim oportunitati de voluntariat, organizam evenimente culturale si sociale, si promovam implicarea activa a studentilor in comunitate."
+    },
+    {
+        "name": "Asociatia Studentilor la Informatica si Inginerie",
+        "type" : "Asociație",
+        "location": "Corp M, Sala 102",
+        "program": "Luni -Vineri: 10:00 - 16:00",
+        "tags": ["informatica", "studenti", "tehnologie", "evenimente"],
+        "description": "Asociatia Studentilor la Informatica si Inginerie este o organizatie dedicata studentilor pasionati de tehnologie si informatica. Oferim oportunitati de networking, organizam workshop-uri si concursuri de programare, si promovam colaborarea intre studenti si industria IT."
+    },
+    {
+        "name": "Asociatia Studentilor la Litere si Teologie",
+        "type" : "Asociație",
+        "location": "Corp M, Sala 103",
+        "program": "Luni -Vineri: 10:00 - 16:00",
+        "tags": ["litere", "teologie", "studenti", "cultură", "evenimente"],
+        "description": "Asociatia Studentilor la Litere si Teologie este o organizatie dedicata studentilor pasionati de literatura si teologie. Oferim oportunitati de networking, organizam workshop-uri si evenimente culturale, si promovam colaborarea intre studenti si lumea literara."
+    },
+    {
+        "name": "Club de carte",
+        "type" : "Club",
+        "location": "Corp M, Sala 104",
+        "program": "Luni -Vineri: 10:00 - 16:00",
+        "tags": ["carti", "litere", "studenti", "cultură"],
+        "description": "Clubul de carte este un loc de întâlnire pentru studentii pasionați de literatură. Organizăm sesiuni de discuție despre cărți, evenimente culturale și activități de promovare a lecturii."
+    },
+    {
+        "name": "Club de fotografie",
+        "type" : "Club",
+        "location": "Corp M, Sala 105",
+        "program": "Luni -Vineri: 10:00 - 16:00",
+        "tags": ["fotografie", "artă", "studenti", "evenimente"],
+        "description": "Clubul de fotografie este un loc de întâlnire pentru studentii pasionați de arta fotografiei. Organizăm sesiuni de discuție despre tehnici de fotografiere, evenimente culturale și activități de promovare a artei fotografice."
+    },
+    {
+        "name": "Club de robotica",
+        "type" : "Club",
+        "location": "Corp M, Sala 106",
+        "program": "Luni -Vineri: 10:00 - 16:00",
+        "tags": ["robotica", "tehnologie", "studenti", "evenimente"],
+        "description": "Clubul de robotica este un loc de întâlnire pentru studentii pasionați de tehnologia robotica. Organizăm sesiuni de discuție despre proiecte de robotica, evenimente culturale și activități de promovare a tehnologiei."
+    },
+    {
+        "name": "Centrul de Consiliere Academica",
+        "type" : "Serviciu",
+        "location": "Corp M, Sala 201",
+        "program": "Luni -Vineri: 9:00 - 17:00",
+        "tags": ["consiliere", "academica", "suport", "studenti"],
+        "description": "Centrul de Consiliere Academica ofera servicii de consiliere si suport pentru studenti in ceea ce priveste planificarea academica, alegerea cursurilor si gestionarea stresului legat de studii. Echipa noastra de consilieri este dedicata sa ajute studentii sa-si atinga potentialul academic."
+    },
+    {
+        "name": "Centrul de Consiliere Psihologica",
+        "type" : "Serviciu",
+        "location": "Corp M, Sala 202",
+        "program": "Luni -Vineri: 9:00 - 17:00",
+        "tags": ["consiliere", "psihologie", "sprijin", "sanatate mentala"],
+        "description": "Centrul de Consiliere Psihologica ofera servicii de consiliere si sprijin pentru studenti care se confrunta cu probleme emotionale sau psihologice. Echipa noastra de profesionisti este dedicata sa ajute studentii sa-si imbunatateasca sanatatea mentala si sa-si gestioneze stresul academic."
+    },
+    {
+        "name": "Centrul de Cariera",
+        "type" : "Serviciu",
+        "location": "Corp M, Sala 203",
+        "program": "Luni -Vineri: 9:00 - 17:00",
+        "tags": ["cariera", "consiliere", "oportunitati", "angajatori"],
+        "description": "Centrul de Cariera ofera servicii de consiliere profesionala, organizare de workshop-uri si evenimente de recrutare pentru studenti. Scopul nostru este sa ajutam studentii sa-si descopere pasiunile si sa-si construiasca o cariera de succes."
+    },
+    {
+        "name": "Biblioteca Universitatii",
+        "type" : "Studiu",
+        "location": "Corp B",
+        "program": "Luni -Vineri: 8:00 - 20:00, Sambata: 10:00 - 14:00",
+        "tags": ["biblioteca", "carti", "resurse", "studiu"],
+        "description": "Biblioteca Universitatii ofera acces la o vasta colectie de carti, reviste si resurse digitale pentru studenti. Este un loc ideal pentru studiu si cercetare, oferind un mediu linistit si facilitati moderne."
+    },
+    {
+        "name": "Cafeneaua Studentilor",
+        "type" : "Relaxare",
+        "location": "Corp C, Parter",
+        "program": "Luni -Vineri: 8:00 - 22:00, Sambata - Duminica: 10:00 - 22:00",
+        "tags": ["cafenea", "relaxare", "socializare", "bauturi", "preturi"],
+        "description": "Cafeneaua Studentilor este un loc de intalnire pentru studenti, unde pot savura bauturi delicioase si pot socializa intr-un ambient placut. Oferim o varietate de cafele, ceaiuri si gustari pentru a satisface toate gusturile."
+    },
+    {
+        "name": "Cantina Studentilor",
+        "type" : "Mancare",
+        "location": "Corp C, Parter",
+        "program": "Luni -Vineri: 10:00 - 14:00, 17:00 - 20:00",
+        "tags": ["mancare", "studenti", "preturi", "bauturi"],
+        "description": "Cantina Studentilor ofera o varietate de mese delicioase si bauturi proaspete pentru studenti. Este un loc ideal pentru a se reface dupa o zi plina de studii."
+    },
+    {
+        "name": "Sala de Sport",
+        "type" : "Sport",
+        "location": "Corp F",
+        "program": "Luni -Vineri: 6:00 - 22:00, Sambata - Duminica: 8:00 - 20:00",
+        "tags": ["sport", "fitness", "relaxare", "sanatate"],
+        "description": "Sala de Sport ofera facilitati moderne pentru antrenamente si activitati sportive. Este un loc ideal pentru studenti care doresc sa-si mentina forma fizica si sa se relaxeze dupa o zi plina de studii."
+    },
+    {
+        "name": "Vinerea verde",
+        "type": "Eveniment",
+        "location": "Campus ",
+        "program": "Vineri - toata ziua",
+        "tags": ["Voluntariat"]
+    },
+    {
+        "name": "Ajutam impruna",
+        "type": "Eveniment",
+        "location": "Azil de varstinici",
+        "program": "Sambata - toata ziua",
+        "tags": ["Voluntariat"]
+    },
+    {
+        "name": "Creăm MicroRoboti",
+        "type": "Eveniment",
+        "location": "Lab 2",
+        "program": "Zilnic intre 10:00 si 12:00",
+        "tags": ["Descopera"]
+    },
+    {
+        "name": "Distrugem cu folos",
+        "type": "Eveniment",
+        "location": "Lab 2",
+        "program": "Zilnic intre 12:00 si 14:00",
+        "tags": ["Descopera"]
+    },
+    {
+        "name": "Orientare in cariera",
+        "type": "Eveniment",
+        "location": "Corp M, Sala 203",
+        "program": "Zilnic intre 12:00 si 16:00",
+        "tags": ["Util"]
+    }
+]

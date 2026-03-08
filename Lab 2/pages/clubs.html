@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluburi - Campus Info Hub</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-title">
+                <img src="/Tehnologii WEB/Laboratoare/Lab 2/media/book.png" alt="Logo Campus" class="logo">
+                <h1>Campus Info Hub</h1>
+            </div>
+            <button class="hamburger" id="hamburger-btn">&#9776;</button>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="../index.html">Acasă</a></li>
+                    <li><a href="map.html">Hartă</a></li>
+                    <li><a href="clubs.html">Cluburi & Asociații</a></li>
+                    <li><a href="events.html">Evenimente</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="info-section" style="text-align: center; min-height: 50vh;">
+            <h2>Viața Studențească</h2>
+            <p>Campusul nostru găzduiește o mulțime de asociații și cluburi pentru toate pasiunile. De la voluntariat la seri de board games, aici găsești tot ce ai nevoie pentru a te dezvolta pe plan personal.</p>
+            <p style="margin-top: 1rem; color: #9197AE;"><em>Derulează mai jos pentru a vedea detaliile despre înscrieri.</em></p>
+        </section>
+
+        <section id="inscrieri" class="info-section" style="padding-top: 2rem; border-top: 1px dashed #9197AE; min-height: 30vh;">
+            <h2>Cum te înscrii? (Recrutări)</h2>
+            <p>Perioada de recrutare are loc de obicei în primele 3 săptămâni ale anului universitar.</p>
+            <ul style="margin-left: 1.5rem; margin-top: 1rem; line-height: 1.8;">
+                <li>Urmărește standurile din holul principal.</li>
+                <li>Completează formularele online.</li>
+                <li>Participă la interviurile de cunoaștere.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Campus Info Hub.</p>
+            <p>Sursă: <a href="https://www.edu.ro" target="_blank">Ministerul Educației</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('hamburger-btn');
+        const nav = document.getElementById('main-nav');
+        if(btn && nav) btn.addEventListener('click', () => nav.classList.toggle('active'));
+    </script>
+</body>
+</html>

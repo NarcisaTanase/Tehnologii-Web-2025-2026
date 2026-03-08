@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: #EFF6EE; 
+    color: #273043; 
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* ================= HEADER & NAVIGARE ================= */
+header {
+    background-color: #273043; 
+    color: #EFF6EE; 
+}
+
+.header-container {
+    display: flex;
+    align-items:center;
+    justify-content: flex-start; 
+    gap: 6rem; 
+    padding: 1.5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap; 
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    height: 40px; 
+}
+
+.logo-title h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+#main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+#main-nav a {
+    color: #EFF6EE;
+    font-weight: 500;
+}
+
+#main-nav a:hover {
+    color: #9197AE; 
+}
+
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: #EFF6EE;
+    font-size: 1.8rem;
+    cursor: pointer;
+    margin-left: auto; 
+}
+
+/* ================= HERO SECTION ================= */
+.hero {
+    height: 60vh;
+    min-height: 400px;
+    background-image: url(media/Gemini_Generated_Image_campus.png);
+    background-color: #9197AE; 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero-content {
+    background-color: rgba(39, 48, 67, 0.85); 
+    color: #EFF6EE;
+    padding: 2.5rem;
+    border-radius: 4px;
+    max-width: 700px;
+}
+
+.hero-content h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+/* Stilizare pentru Fragment Link-ul din Hero */
+.hero-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 10px 24px;
+    background-color: #9197AE; /* 10% - Culoarea de accent */
+    color: #EFF6EE; /* 60% - Text deschis */
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.hero-btn:hover {
+    background-color: #EFF6EE;
+    color: #273043;
+    transform: translateY(-2px); /* Se ridică puțin la hover */
+}
+
+/* ================= MAIN (SECȚIUNILE DE PREZENTARE) ================= */
+.presentation-sections {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.info-section h2 {
+    color: #273043; 
+    border-bottom: 2px solid #9197AE; 
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+/* ================= ELEMENTE GENERATE DIN JS (Filtre și Carduri) ================= */
+#filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+#filters-container button {
+    background-color: #9197AE; 
+    color: #EFF6EE;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px; 
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#filters-container button:hover {
+    background-color: #273043; 
+}
+
+#resources-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.resource-card {
+    background-color: #EFF6EE;
+    border: 1px solid #9197AE; 
+    padding: 1.5rem;
+    border-radius: 4px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(39, 48, 67, 0.1); 
+}
+
+.resource-card h3 {
+    color: #273043;
+    margin-bottom: 0.5rem;
+}
+
+.resource-card p {
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+}
+
+.resource-card small {
+    display: block;
+    margin-top: 1.5rem;
+    color: #9197AE; 
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background-color: #273043; 
+    color: #EFF6EE;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: auto;
+}
+
+footer a {
+    color: #9197AE; 
+    text-decoration: underline;
+}
+
+footer a:hover {
+    color: #EFF6EE;
+}
+
+
+/* ================= RESPONSIVE (MOBIL) ================= */
+@media (max-width: 768px) {
+    .header-container {
+        justify-content: space-between; 
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .hamburger {
+        display: block; 
+    }
+
+    #main-nav {
+        display: none;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    
+    #main-nav.active {
+        display: block;
+    }
+
+    #main-nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    #main-nav a {
+        display: block;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(145, 151, 174, 0.3); 
+    }
+
+    .hero-content {
+        padding: 1.5rem;
+    }
+
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* ================= CLASE PENTRU JAVASCRIPT-UL SIMPLIFICAT ================= */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.simplu-btn {
+    background-color: #9197AE; /* Culoarea ta 10% */
+    color: #EFF6EE;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.simplu-btn:hover {
+    background-color: #273043; /* Culoarea ta 30% la hover */
+}
+
+.tag-badge {
+    background-color: #9197AE;
+    color: #EFF6EE;
+    padding: 6px 14px;
+    border-radius: 20px; /* Colțuri rotunjite tip pastilă */
+    font-size: 0.9rem;
+    display: inline-block;
+    margin: 5px;
+}

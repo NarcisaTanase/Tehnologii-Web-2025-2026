@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hartă - Campus Info Hub</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-title">
+                <img src="/Tehnologii WEB/Laboratoare/Lab 2/media/book.png" alt="Logo Campus" class="logo">
+                <h1>Campus Info Hub</h1>
+            </div>
+            <button class="hamburger" id="hamburger-btn">&#9776;</button>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="../index.html">Acasă</a></li>
+                    <li><a href="map.html">Hartă</a></li>
+                    <li><a href="clubs.html">Cluburi & Asociații</a></li>
+                    <li><a href="events.html">Evenimente</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="info-section" style="text-align: center; min-height: 60vh;">
+            <h2>Harta Campusului</h2>
+            <p style="margin-bottom: 2rem;">Ghidează-te mai ușor spre amfiteatre și laboratoare.</p>
+            
+            <img src="/Tehnologii WEB/Laboratoare/Lab 2/media/Gemini_Generated_Image_campus_map.png" alt="Harta Campus" style="max-width: 100%; border-radius: 8px; border: 1px solid #9197AE;">
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Campus Info Hub.</p>
+            <p>Sursă: <a href="https://www.edu.ro" target="_blank">Ministerul Educației</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('hamburger-btn');
+        const nav = document.getElementById('main-nav');
+        if(btn && nav) btn.addEventListener('click', () => nav.classList.toggle('active'));
+    </script>
+</body>
+</html>
