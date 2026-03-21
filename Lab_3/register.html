@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laborator 3 - Înregistrare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">Acasă</a> | 
+            <a href="preferences.html">Preferințe</a> | 
+            <a href="cookies-info.html">Info Cookies</a> | 
+            <a href="login.html">Autentificare</a>
+        </nav>
+
+        <hr>
+
+        <h1>Înregistrare Cont Nou</h1>
+        
+        <div id="errorMessage" style="display: none; padding: 10px; margin-bottom: 15px;" class="alert-error"></div>
+        <div id="successMessage" style="display: none; padding: 10px; margin-bottom: 15px;" class="alert-success">
+            Cont creat cu succes! Redirecționare spre Autentificare...
+        </div>
+
+        <form id="registerForm">
+            <div style="margin-bottom: 10px;">
+                <label for="username">Username (minim 3 caractere):</label>
+                <input type="text" id="username" minlength="3" required>
+            </div>
+            
+            <div style="margin-bottom: 10px;">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div style="margin-bottom: 10px;">
+                <label for="password">Parolă (minim 6 caractere):</label>
+                <input type="password" id="password" minlength="6" required>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="confirmPassword">Confirmare parolă:</label>
+                <input type="password" id="confirmPassword" minlength="6" required>
+            </div>
+
+            <button type="submit">Creează Cont</button>
+        </form>
+
+        <p style="margin-top: 20px;">
+            Ai deja cont? <a href="login.html">Autentifică-te aici</a>.
+        </p>
+    </div>
+
+    <script src="js/cookies.js"></script>
+    <script src="js/storage.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aplicăm tema curentă
+            const currentTheme = CookieManager.get('theme') || 'light';
+            document.body.className = currentTheme;
+
+            // 2 & 3. Logica și validările formularului
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const inputUser = document.getElementById('username').value.trim();
+                const inputEmail = document.getElementById('email').value.trim();
+                const inputPass = document.getElementById('password').value;
+                const confirmPass = document.getElementById('confirmPassword').value;
+                
+                const errorBox = document.getElementById('errorMessage');
+                const successBox = document.getElementById('successMessage');
+                
+                // Ascundem eroarea la fiecare nouă încercare
+                errorBox.style.display = 'none';
+
+                // Validare: Parolele trebuie să coincidă
+                if (inputPass !== confirmPass) {
+                    showError('Parolele nu coincid!');
+                    return;
+                }
+
+                // Preluăm utilizatorii existenți din localStorage
+                let users = StorageManager.getLocal('users') || [];
+
+                // Validare: Username unic
+                const userExists = users.some(u => u.username.toLowerCase() === inputUser.toLowerCase());
+                if (userExists) {
+                    showError('Acest username este deja folosit!');
+                    return;
+                }
+
+                // Validare: Email unic
+                const emailExists = users.some(u => u.email.toLowerCase() === inputEmail.toLowerCase());
+                if (emailExists) {
+                    showError('Acest email este deja folosit!');
+                    return;
+                }
+
+                // Dacă toate validările au trecut, creăm noul utilizator
+                const newUser = {
+                    id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1, // Generăm un ID nou
+                    username: inputUser,
+                    email: inputEmail,
+                    password: inputPass
+                };
+
+                // Adăugăm în array și salvăm în localStorage
+                users.push(newUser);
+                StorageManager.setLocal('users', users);
+
+                // Afișăm succes și redirecționăm
+                successBox.style.display = 'block';
+                document.getElementById('registerForm').reset();
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            });
+
+            // Funcție ajutătoare pentru afișarea erorilor
+            function showError(message) {
+                const errorBox = document.getElementById('errorMessage');
+                errorBox.innerText = message;
+                errorBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

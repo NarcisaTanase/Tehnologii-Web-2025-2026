@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laborator 3 - Autentificare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">Acasă</a> | 
+            <a href="preferences.html">Preferințe</a> | 
+            <a href="cookies-info.html">Info Cookies</a> | 
+            <a href="login.html">Autentificare</a>
+        </nav>
+
+        <hr>
+
+        <h1>Autentificare</h1>
+        
+        <div id="errorMessage" style="display: none; padding: 10px; margin-bottom: 15px;" class="alert-error"></div>
+
+        <form id="loginForm">
+            <div style="margin-bottom: 10px;">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+            </div>
+            
+            <div style="margin-bottom: 10px;">
+                <label for="password">Parolă:</label>
+                <input type="password" id="password" required>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe" style="font-weight: normal; display: inline;">Ține-mă minte</label>
+            </div>
+
+            <button type="submit">Autentificare</button>
+        </form>
+
+        <p style="margin-top: 20px;">
+            Nu ai cont? <a href="register.html">Înregistrează-te aici</a>.
+        </p>
+    </div>
+
+    <script src="js/cookies.js"></script>
+    <script src="js/storage.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aplicăm tema curentă
+            const currentTheme = CookieManager.get('theme') || 'light';
+            document.body.className = currentTheme;
+
+            // 3. Utilizatori de test - îi creăm la prima încărcare dacă nu există
+            let users = StorageManager.getLocal('users');
+            if (!users) {
+                const defaultUsers = [
+                    { id: 1, username: 'admin', password: 'password', email: 'admin@example.com' },
+                    { id: 2, username: 'student', password: 'student123', email: 'student@example.com' }
+                ];
+                StorageManager.setLocal('users', defaultUsers);
+                users = defaultUsers;
+            }
+
+            // (Extra utilitate) Pre-completăm username-ul dacă a bifat anterior "Ține-mă minte"
+            const savedUsername = StorageManager.getLocal('rememberedUser');
+            if (savedUsername) {
+                document.getElementById('username').value = savedUsername;
+                document.getElementById('rememberMe').checked = true;
+            }
+
+            // 2. Logica de autentificare la apăsarea butonului
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const inputUser = document.getElementById('username').value;
+                const inputPass = document.getElementById('password').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+                const errorBox = document.getElementById('errorMessage');
+
+                // Verificăm dacă username și parola se potrivesc
+                const validUser = users.find(u => u.username === inputUser && u.password === inputPass);
+
+                if (validUser) {
+                    // Dacă e bifat "Ține-mă minte", salvăm în localStorage
+                    if (rememberMe) {
+                        StorageManager.setLocal('rememberedUser', inputUser);
+                    } else {
+                        StorageManager.removeLocal('rememberedUser');
+                    }
+
+                    // Creăm sesiunea în sessionStorage
+                    const sessionData = {
+                        userId: validUser.id,
+                        username: validUser.username,
+                        email: validUser.email,
+                        loginTime: new Date().toLocaleString(),
+                        sessionId: 'sess_' + Math.random().toString(36).substr(2, 9) // ID generat random
+                    };
+                    
+                    StorageManager.setSession('currentSession', sessionData);
+
+                    // Redirecționăm către dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // Afișăm eroare dacă datele sunt greșite
+                    errorBox.innerText = 'Username sau parolă incorecte!';
+                    errorBox.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

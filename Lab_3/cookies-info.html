@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laborator 3 - Info Cookies</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">Acasă</a> | 
+            <a href="preferences.html">Preferințe</a> | 
+            <a href="cookies-info.html">Info Cookies</a> | 
+            <a href="login.html">Autentificare</a>
+        </nav>
+
+        <hr>
+        <h1>Informații Storage și Cookies</h1>
+
+        <h2>1. Cookies</h2>
+        <p><strong>Valoare brută (document.cookie):</strong></p>
+        <code id="rawCookies" style="display:block; padding:10px; background:#eee; color:#333; margin-bottom:10px;"></code>
+        
+        <table border="1" id="cookiesInfoTable" style="width: 100%; text-align: left;">
+            <thead>
+                <tr><th>Nume</th><th>Valoare</th><th>Lungime</th><th>Acțiune</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <hr>
+
+        <h2>2. Local Storage</h2>
+        <p><strong>Format JSON:</strong></p>
+        <pre id="rawLocal" style="padding:10px; background:#eee; color:#333;"></pre>
+
+        <table border="1" id="localInfoTable" style="width: 100%; text-align: left;">
+            <thead>
+                <tr><th>Cheie</th><th>Valoare</th><th>Dimensiune (chars)</th><th>Acțiune</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <hr>
+
+        <h2>3. Session Storage</h2>
+        <p><strong>Format JSON:</strong></p>
+        <pre id="rawSession" style="padding:10px; background:#eee; color:#333;"></pre>
+
+        <table border="1" id="sessionInfoTable" style="width: 100%; text-align: left;">
+            <thead>
+                <tr><th>Cheie</th><th>Valoare</th><th>Dimensiune (chars)</th><th>Acțiune</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <hr>
+
+        <h2>4. Comparație Teoretică</h2>
+        <table border="1" style="width: 100%; text-align: left;">
+            <thead>
+                <tr>
+                    <th>Caracteristică</th>
+                    <th>Cookies</th>
+                    <th>localStorage</th>
+                    <th>sessionStorage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Capacitate</strong></td>
+                    <td>~4 KB</td>
+                    <td>5-10 MB</td>
+                    <td>5-10 MB</td>
+                </tr>
+                <tr>
+                    <td><strong>Expirare</strong></td>
+                    <td>Setată manual (sau la închiderea ferestrei dacă nu e setată)</td>
+                    <td>Nu expiră (persistă până la ștergere manuală)</td>
+                    <td>La închiderea tab-ului / ferestrei curente</td>
+                </tr>
+                <tr>
+                    <td><strong>Trimis la server?</strong></td>
+                    <td>Da, automat cu fiecare cerere HTTP</td>
+                    <td>Nu (doar pe client)</td>
+                    <td>Nu (doar pe client)</td>
+                </tr>
+                <tr>
+                    <td><strong>Accesibil din?</strong></td>
+                    <td>Orice tab/fereastră (același domeniu)</td>
+                    <td>Orice tab/fereastră (același domeniu)</td>
+                    <td>Doar din tab-ul curent în care a fost creat</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/cookies.js"></script>
+    <script src="js/storage.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aplicăm tema curentă
+            const currentTheme = CookieManager.get('theme') || 'light';
+            document.body.className = currentTheme;
+
+            // --- 1. POPULARE COOKIES ---
+            document.getElementById('rawCookies').innerText = document.cookie || 'Nu există cookie-uri.';
+            const cookiesTable = document.querySelector('#cookiesInfoTable tbody');
+            const allCookies = CookieManager.getAll();
+            
+            for (const [name, value] of Object.entries(allCookies)) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${name}</td>
+                    <td>${value}</td>
+                    <td>${value.length}</td>
+                    <td><button class="btn-danger" onclick="deleteCookie('${name}')">Șterge</button></td>
+                `;
+                cookiesTable.appendChild(tr);
+            }
+
+            // --- 2. POPULARE LOCAL STORAGE ---
+            const allLocal = StorageManager.getAllLocal();
+            document.getElementById('rawLocal').innerText = JSON.stringify(allLocal, null, 2);
+            const localTable = document.querySelector('#localInfoTable tbody');
+            
+            for (const [key, value] of Object.entries(allLocal)) {
+                let strValue = typeof value === 'object' ? JSON.stringify(value) : String(value);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${key}</td>
+                    <td>${strValue}</td>
+                    <td>${strValue.length}</td>
+                    <td><button class="btn-danger" onclick="deleteLocal('${key}')">Șterge</button></td>
+                `;
+                localTable.appendChild(tr);
+            }
+
+            // --- 3. POPULARE SESSION STORAGE ---
+            const allSession = StorageManager.getAllSession();
+            document.getElementById('rawSession').innerText = JSON.stringify(allSession, null, 2);
+            const sessionTable = document.querySelector('#sessionInfoTable tbody');
+            
+            for (const [key, value] of Object.entries(allSession)) {
+                let strValue = typeof value === 'object' ? JSON.stringify(value) : String(value);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${key}</td>
+                    <td>${strValue}</td>
+                    <td>${strValue.length}</td>
+                    <td><button class="btn-danger" onclick="deleteSession('${key}')">Șterge</button></td>
+                `;
+                sessionTable.appendChild(tr);
+            }
+        });
+
+        // Funcții globale pentru butoanele de ștergere
+        function deleteCookie(name) {
+            CookieManager.delete(name);
+            location.reload(); // Reîncărcăm pagina pentru a vedea noul tabel
+        }
+
+        function deleteLocal(key) {
+            StorageManager.removeLocal(key);
+            location.reload();
+        }
+
+        function deleteSession(key) {
+            StorageManager.removeSession(key);
+            location.reload();
+        }
+    </script>
+</body>
+</html>

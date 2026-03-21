@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laborator 3 - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">Acasă</a> | 
+            <a href="preferences.html">Preferințe</a> | 
+            <a href="cookies-info.html">Info Cookies</a> | 
+            <a href="dashboard.html">Dashboard</a>
+        </nav>
+
+        <hr>
+
+        <h1>Dashboard Utilizator</h1>
+
+        <div style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+            Acces autorizat! Ești autentificat.
+        </div>
+
+        <h2>Informații Sesiune:</h2>
+        <ul>
+            <li><strong>ID Sesiune:</strong> <span id="sessId"></span></li>
+            <li><strong>Username:</strong> <span id="sessUser"></span></li>
+            <li><strong>Email:</strong> <span id="sessEmail"></span></li>
+            <li><strong>Ora autentificării:</strong> <span id="sessTime"></span></li>
+            <li><strong>Durata sesiunii curente (în acest tab):</strong> <span id="sessDuration">0</span> secunde</li>
+        </ul>
+
+        <h2>Date brute din sessionStorage:</h2>
+        <pre id="rawSessionData" style="background:#eee; padding:10px; color:#333; overflow-x: auto;"></pre>
+
+        <hr>
+
+        <div style="margin-top: 20px;">
+            <a href="cart.html" style="margin-right: 15px; display: inline-block;">🛒 Mergi la Coșul de Cumpărături</a>
+            <br><br>
+            <a href="dashboard.html" target="_blank" style="margin-right: 15px; display: inline-block;">🔗 Deschide în tab nou (Experiment)</a>
+            <br><br>
+            <button id="logoutBtn" class="btn-danger">Deconectare</button>
+        </div>
+    </div>
+
+    <script src="js/cookies.js"></script>
+    <script src="js/storage.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aplicăm tema curentă
+            const currentTheme = CookieManager.get('theme') || 'light';
+            document.body.className = currentTheme;
+
+            // 1. Verificăm dacă utilizatorul este autentificat (dacă există sesiune)
+            const sessionData = StorageManager.getSession('currentSession');
+            
+            if (!sessionData) {
+                // Dacă nu există, înseamnă că nu a trecut pe la login. Îl redirecționăm.
+                alert('Trebuie să fii autentificat pentru a accesa această pagină!');
+                window.location.href = 'login.html';
+                return; // Oprim execuția restului de cod
+            }
+
+            // 2. Populăm HTML-ul cu informațiile din sesiune
+            document.getElementById('sessId').innerText = sessionData.sessionId;
+            document.getElementById('sessUser').innerText = sessionData.username;
+            document.getElementById('sessEmail').innerText = sessionData.email;
+            document.getElementById('sessTime').innerText = sessionData.loginTime;
+
+            // Calculăm durata sesiunii actualizată în timp real (la fiecare secundă)
+            let sessionStart = new Date().getTime(); 
+            
+            setInterval(() => {
+                let currentTime = new Date().getTime();
+                // Diferența este în milisecunde, o împărțim la 1000 pentru secunde
+                let seconds = Math.floor((currentTime - sessionStart) / 1000);
+                document.getElementById('sessDuration').innerText = seconds;
+            }, 1000);
+
+            // 3. Afișăm datele brute din sessionStorage pentru debug
+            document.getElementById('rawSessionData').innerText = JSON.stringify(sessionData, null, 2);
+
+            // 4. Logica pentru Butonul de Deconectare
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                // Ștergem sesiunea din storage
+                StorageManager.removeSession('currentSession');
+                // Alternativ, dacă vrem să ștergem absolut tot din sessionStorage: StorageManager.clearSession();
+                
+                // Îl trimitem înapoi la login
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>

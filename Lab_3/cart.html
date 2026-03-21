@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laborator 3 - Coș de Cumpărături</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">Acasă</a> | 
+            <a href="preferences.html">Preferințe</a> | 
+            <a href="cookies-info.html">Info Cookies</a> | 
+            <a href="dashboard.html">Dashboard</a> |
+            <a href="cart.html">Coș</a>
+        </nav>
+
+        <hr>
+
+        <h1>Coș de Cumpărături</h1>
+
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <h3>Adaugă un produs</h3>
+            <form id="addToCartForm">
+                <label for="productSelect">Produs:</label>
+                <select id="productSelect" required>
+                    </select>
+
+                <label for="quantity" style="margin-left: 10px;">Cantitate (1-10):</label>
+                <input type="number" id="quantity" min="1" max="10" value="1" required style="width: 60px;">
+
+                <button type="submit" style="margin-left: 10px;">Adaugă în Coș</button>
+            </form>
+        </div>
+
+        <h2>Produse în coș:</h2>
+        <table border="1" id="cartTable" style="width: 100%; text-align: left; margin-bottom: 15px;">
+            <thead>
+                <tr>
+                    <th>Produs</th>
+                    <th>Cantitate</th>
+                    <th>Preț Unitar</th>
+                    <th>Subtotal</th>
+                    <th>Acțiune</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+
+        <div style="font-size: 1.2em; margin-bottom: 15px;">
+            <strong>TOTAL: <span id="cartTotal">0</span> RON</strong>
+        </div>
+
+        <button id="clearCartBtn" class="btn-danger">Golește Coșul</button>
+    </div>
+
+    <script src="js/cookies.js"></script>
+    <script src="js/storage.js"></script>
+
+    <script>
+        // 2. Lista de produse disponibile (hard-coded)
+        const products = {
+            laptop: { name: 'Laptop', price: 2500 },
+            telefon: { name: 'Telefon', price: 1200 },
+            tableta: { name: 'Tabletă', price: 800 },
+            casti: { name: 'Căști', price: 150 }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aplicăm tema curentă
+            const currentTheme = CookieManager.get('theme') || 'light';
+            document.body.className = currentTheme;
+
+            // 1. Verificare autentificare
+            const sessionData = StorageManager.getSession('currentSession');
+            if (!sessionData) {
+                alert('Trebuie să fii autentificat pentru a accesa coșul de cumpărături!');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Populăm select-ul cu produsele disponibile
+            const productSelect = document.getElementById('productSelect');
+            for (const [key, product] of Object.entries(products)) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${product.name} - ${product.price} RON`;
+                productSelect.appendChild(option);
+            }
+
+            // Inițializăm afișarea coșului
+            renderCart();
+
+            // Logica pentru adăugarea în coș
+            document.getElementById('addToCartForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const selectedProductKey = productSelect.value;
+                const quantity = parseInt(document.getElementById('quantity').value);
+
+                // 5. Preluăm coșul actual din sessionStorage sau creăm unul gol
+                let cart = StorageManager.getSession('cart') || {};
+
+                // Dacă produsul există deja, adunăm cantitatea, altfel îl setăm
+                if (cart[selectedProductKey]) {
+                    cart[selectedProductKey] += quantity;
+                } else {
+                    cart[selectedProductKey] = quantity;
+                }
+
+                // Salvăm noul coș înapoi în sessionStorage
+                StorageManager.setSession('cart', cart);
+                
+                // Re-desenăm tabelul
+                renderCart();
+            });
+
+            // Logica pentru butonul "Golește Coșul"
+            document.getElementById('clearCartBtn').addEventListener('click', () => {
+                StorageManager.removeSession('cart');
+                renderCart();
+            });
+        });
+
+        // Funcție pentru afișarea și calcularea coșului
+        function renderCart() {
+            const cart = StorageManager.getSession('cart') || {};
+            const tbody = document.querySelector('#cartTable tbody');
+            const totalSpan = document.getElementById('cartTotal');
+            
+            tbody.innerHTML = ''; // Curățăm tabelul vechi
+            let total = 0;
+
+            // Dacă coșul e gol, afișăm un mesaj
+            if (Object.keys(cart).length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Coșul este gol.</td></tr>';
+                totalSpan.textContent = '0';
+                return;
+            }
+
+            // Parcurgem fiecare produs din coș
+            for (const [key, quantity] of Object.entries(cart)) {
+                // Ne asigurăm că produsul încă există în lista noastră 'products'
+                if (products[key]) {
+                    const product = products[key];
+                    const subtotal = product.price * quantity;
+                    total += subtotal;
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${product.name}</td>
+                        <td>${quantity}</td>
+                        <td>${product.price} RON</td>
+                        <td>${subtotal} RON</td>
+                        <td><button class="btn-danger" onclick="removeFromCart('${key}')">Șterge</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            }
+
+            // Actualizăm totalul
+            totalSpan.textContent = total;
+        }
+
+        // Funcție globală pentru a șterge un singur produs din coș
+        function removeFromCart(productKey) {
+            let cart = StorageManager.getSession('cart') || {};
+            
+            if (cart[productKey]) {
+                delete cart[productKey]; // Ștergem cheia din obiect
+                StorageManager.setSession('cart', cart); // Salvăm obiectul modificat
+                renderCart(); // Re-desenăm tabelul
+            }
+        }
+    </script>
+</body>
+</html>
